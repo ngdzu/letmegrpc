@@ -111,6 +111,8 @@ func main() {
 	if err := ioutil.WriteFile(filepath.Join(cmdDir, "/main.go"), []byte(mainStr), 0777); err != nil {
 		log.Fatalf("%s\n", err)
 	}
+	
+
 	gorun := exec.Command("go", "run", "main.go")
 	envs := os.Environ()
 	for i, e := range envs {
@@ -120,5 +122,6 @@ func main() {
 	}
 	gorun.Env = envs
 	gorun.Dir = cmdDir
+	run(exec.Command("go", "mod", "init", cmdDir))
 	run(gorun)
 }
